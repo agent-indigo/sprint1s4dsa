@@ -1,22 +1,22 @@
 package com.keyin.hynes.braden.sprint1s4dsa.classes.lists;
 import com.keyin.hynes.braden.sprint1s4dsa.classes.abstracts.List;
-import com.keyin.hynes.braden.sprint1s4dsa.classes.entities.User;
+import com.keyin.hynes.braden.sprint1s4dsa.classes.nodes.UserNode;
 public final class UserList extends List {
-    private User head;
-    private User tail;
+    private UserNode head;
+    private UserNode tail;
     public UserList() {
         super();
     }
-    public User getHead() {
+    public UserNode getHead() {
         return head;
     }
-    public void setHead(User head) {
+    public void setHead(UserNode head) {
         this.head = head;
     }
-    public User getTail() {
+    public UserNode getTail() {
         return tail;
     }
-    public void setTail(User tail) {
+    public void setTail(UserNode tail) {
         this.tail = tail;
     }
 }

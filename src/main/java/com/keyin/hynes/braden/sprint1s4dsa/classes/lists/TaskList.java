@@ -1,22 +1,22 @@
 package com.keyin.hynes.braden.sprint1s4dsa.classes.lists;
 import com.keyin.hynes.braden.sprint1s4dsa.classes.abstracts.List;
-import com.keyin.hynes.braden.sprint1s4dsa.classes.entities.Task;
+import com.keyin.hynes.braden.sprint1s4dsa.classes.nodes.TaskNode;
 public final class TaskList extends List {
-    private Task head;
-    private Task tail;
+    private TaskNode head;
+    private TaskNode tail;
     public TaskList() {
         super();
     }
-    public Task getHead() {
+    public TaskNode getHead() {
         return head;
     }
-    public void setHead(Task head) {
+    public void setHead(TaskNode head) {
         this.head = head;
     }
-    public Task getTail() {
+    public TaskNode getTail() {
         return tail;
     }
-    public void setTail(Task tail) {
+    public void setTail(TaskNode tail) {
         this.tail = tail;
     }
 }
