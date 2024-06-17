@@ -23,4 +23,8 @@ public final class Task {
     public void setStatus(Status status) {
         this.status = status;
     }
+    @Override
+    public String toString() {
+        return "ID         : " + id + "\nDescription: " + description + "\nStatus     : " + status.toString();
+    }
 }

@@ -22,4 +22,8 @@ public final class User {
     public LinkedList<Task> getTasks() {
         return tasks;
     }
+    @Override
+    public String toString() {
+        return "ID:   " + id + "\nName: " + name;
+    }
 }
