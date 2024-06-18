@@ -9,8 +9,6 @@ public final class UserListHandler extends ListHandler {
     private UserNode currentUser;
     private UserNode nextUser;
     private UserNode previousUser;
-    private boolean userFound;
-    private String listNotFoundMessage;
     private String userNotFoundMessage;
     public UserListHandler() {
         super();
@@ -18,8 +16,6 @@ public final class UserListHandler extends ListHandler {
         this.list = new UserList();
         this.currentUser = list.getHead();
         this.nextUser = newUser;
-        this.userFound = false;
-        this.listNotFoundMessage = "Error: list not found.";
         this.userNotFoundMessage = "Error: user not found.";
     }
     public UserList getList() {
@@ -76,13 +72,13 @@ public final class UserListHandler extends ListHandler {
             for (int i = 0; i < list.getSize(); i++) {
                 if (currentUser.getUser().equals(user)) {
                     System.out.printf("User found at position %d.", i);
-                    this.userFound = true;
+                    this.found = true;
                 }
             }
         } else {
             System.err.println(userNotFoundMessage);
         }
-        return userFound;
+        return found;
     }
     public void deleteUser(User user) {
         if (list.getHead() == null) {

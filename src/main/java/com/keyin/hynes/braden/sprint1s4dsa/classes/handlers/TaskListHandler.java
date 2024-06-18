@@ -9,8 +9,6 @@ public final class TaskListHandler extends ListHandler {
     private TaskNode currentTask;
     private TaskNode nextTask;
     private TaskNode previousTask;
-    private boolean taskFound;
-    private String listNotFoundMessage;
     private String taskNotFoundMessage;
     public TaskListHandler() {
         super();
@@ -18,8 +16,6 @@ public final class TaskListHandler extends ListHandler {
         this.list = new TaskList();
         this.currentTask = list.getHead();
         this.nextTask = newTask;
-        this.taskFound = false;
-        this.listNotFoundMessage = "Error: list not found.";
         this.taskNotFoundMessage = "Error: task not found.";
     }
     public TaskList getList() {
@@ -76,13 +72,13 @@ public final class TaskListHandler extends ListHandler {
             for (int i = 0; i < list.getSize(); i++) {
                 if (currentTask.getTask().equals(task)) {
                     System.out.printf("Task found at position %d.", i);
-                    this.taskFound = true;
+                    this.found = true;
                 }
             }
         } else {
             System.err.println(taskNotFoundMessage);
         }
-        return taskFound;
+        return found;
     }
     public void deleteTask(Task task) {
         if (list.getHead() == null) {
