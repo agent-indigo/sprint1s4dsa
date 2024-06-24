@@ -17,6 +17,7 @@ public final class App {
     private int taskId;
     private Task newTask;
     protected boolean taskExists;
+    private String statusChangedMessage;
     private App() {
         this.selectionPrompt = "\nEnter selection:\n";
         this.scanner = new Scanner(System.in);
@@ -30,6 +31,7 @@ public final class App {
         this.taskId = 1;
         this.newTask = new Task();
         this.taskExists = false;
+        this.statusChangedMessage = "Task status successfully changed.";
     }
     public static void main(String[] args) {
         App app = new App();
@@ -114,7 +116,7 @@ public final class App {
         while (selection != 0) {
             System.out.println("\nUsers List\n");
             for (User user : users) {
-                System.out.printf("%d: %s", user.getId(), user.getName());
+                System.out.printf("%d: %s\n", user.getId(), user.getName());
             }
             System.out.println("\nEnter 0 to return the users menu.\n");
             System.out.println("\nEnter a user ID to view available actions.\n");
@@ -200,7 +202,7 @@ public final class App {
                 while (selection != 0) {
                     System.out.printf("\n%s's Task List\n", user.getName());
                     for (Task task : user.getTasks()) {
-                        System.out.printf("%d: %s: %s", task.getId(), task.getDescription(), task.getStatus().toString());
+                        System.out.printf("%d: %s: %s\n", task.getId(), task.getDescription(), task.getStatus().toString());
                     }
                     System.out.println("\nEnter 0 to return to the user menu.\n");
                     System.out.println("\nEnter a task ID to view available actions.\n");
@@ -253,8 +255,10 @@ public final class App {
         for (User user : users) {
             if (user.getId() == id) {
                 System.out.println("\nEnter new name:\n");
-                user.setName(scanner.nextLine());
-                System.out.println("\nName successfully changed.\n");
+                if (scanner.nextLine() != "") {
+                    user.setName(scanner.nextLine());
+                    System.out.println("\nName successfully changed.\n");
+                }
             }
         }
         userMenu(id);
@@ -277,5 +281,154 @@ public final class App {
     private void taskMenu(
         int userId,
         int taskId
-    ) {}
+    ) {
+        for (User user : users) {
+            if (user.getId() == userId) {
+                for (Task task : user.getTasks()) {
+                    if (task.getId() == taskId) {
+                        while (selection != 4) {
+                            System.out.printf(
+                                "\n%d: %s: %s | %d: %s\n",
+                                task.getId(),
+                                task.getDescription(),
+                                task.getStatus().toString(),
+                                user.getId(),
+                                user.getName()
+                            );
+                            System.out.println("1: Edit Description");
+                            System.out.println("2: Edit Status");
+                            System.out.println("3: Delete");
+                            System.out.println("4: Task List");
+                            System.out.println(selectionPrompt);
+                            try {
+                                this.selection = Integer.parseInt(scanner.nextLine());
+                                switch (selection) {
+                                    case 1: {
+                                        this.selection = -1;
+                                        editTaskDescription(user.getId(), task.getId());
+                                        break;
+                                    } case 2: {
+                                        this.selection = -1;
+                                        editTaskStatus(user.getId(), task.getId());
+                                        break;
+                                    } case 3: {
+                                        this.selection = -1;
+                                        deleteTask(user.getId(), task.getId());
+                                        break;
+                                    } case 4: {
+                                        this.selection = -1;
+                                        tasksList(user.getId());
+                                        break;
+                                    }
+                                    default: {
+                                        this.selection = -1;
+                                        System.err.println(invalidInputMessage);
+                                        break;
+                                    }
+                                }
+                            } catch (NumberFormatException numberFormatException) {
+                                System.err.println(invalidInputMessage);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    private void editTaskDescription(
+        int userId,
+        int taskId
+    ) {
+        for (User user : users) {
+            if (user.getId() == userId) {
+                for (Task task : user.getTasks()) {
+                    if (task.getId() == taskId) {
+                        System.out.println("Enter new description: ");
+                        if (scanner.nextLine() != "") {
+                            task.setDescription(scanner.nextLine());
+                            System.out.println("Description successfully changed.");
+                        }
+                    }
+                }
+            }
+        }
+        taskMenu(userId, taskId);
+    }
+    private void editTaskStatus(
+        int userId,
+        int taskId
+    ) {
+        for (User user : users) {
+            if (user.getId() == userId) {
+                for (Task task : user.getTasks()) {
+                    if (task.getId() == taskId) {
+                        while (selection != 4) {
+                            System.out.println("\nEdit Task Status\n");
+                            System.out.println("1: ToDo");
+                            System.out.println("2: Started");
+                            System.out.println("3: Completed");
+                            System.out.println("4: Task Menu");
+                            System.out.println(selectionPrompt);
+                            try {
+                                this.selection = Integer.parseInt(scanner.nextLine());
+                                switch (selection) {
+                                    case 1: {
+                                        this.selection = -1;
+                                        if (task.getStatus().toString() != "ToDo") {
+                                            task.setStatus(Status.ToDo);
+                                            System.out.println(statusChangedMessage);
+                                        }
+                                        break;
+                                    }
+                                    case 2: {
+                                        this.selection = -1;
+                                        if (task.getStatus().toString() != "Started") {
+                                            task.setStatus(Status.Started);
+                                            System.out.println(statusChangedMessage);
+                                        }
+                                        break;
+                                    }
+                                    case 3: {
+                                        this.selection = -1;
+                                        if (task.getStatus().toString() != "Completed") {
+                                            task.setStatus(Status.Completed);
+                                            System.out.println(statusChangedMessage);}
+                                        break;
+                                    }
+                                    case 4: {
+                                        this.selection = -1;
+                                        taskMenu(user.getId(), task.getId());
+                                        break;
+                                    }
+                                    default:
+                                        this.selection = -1;
+                                        System.err.println(invalidInputMessage);
+                                        break;
+                                }
+                            } catch (NumberFormatException numberFormatException) {
+                                System.err.println(invalidInputMessage);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        taskMenu(userId, taskId);
+    }
+    private void deleteTask(
+        int userId,
+        int taskId
+    ) {
+        for (User user : users) {
+            if (user.getId() == userId) {
+                for (Task task : user.getTasks()) {
+                    if (task.getId() == taskId) {
+                        task.setId(0);
+                        task.setDescription(null);
+                        task.setStatus(null);
+                    }
+                }
+            }
+        }
+    }
 }
