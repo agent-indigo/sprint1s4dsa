@@ -153,7 +153,7 @@ public final class App {
         for (User user : users) {
             if (user.getId() == id) {
                 while (selection != 5) {
-                    System.out.printf("\n%s\n", user.getId());
+                    System.out.printf("\n\n%d | %s\n\n", user.getId(), user.getName());
                     System.out.println("1: Task List");
                     System.out.println("2: Add Task");
                     System.out.println("3: Rename");
@@ -200,9 +200,9 @@ public final class App {
         for (User user : users) {
             if (user.getId() == userId) {
                 while (selection != 0) {
-                    System.out.printf("\n%s's Task List\n", user.getName());
+                    System.out.printf("\n\n%s's Task List\n\n", user.getName());
                     for (Task task : user.getTasks()) {
-                        System.out.printf("%d: %s: %s\n", task.getId(), task.getDescription(), task.getStatus().toString());
+                        System.out.printf("%d: %s: %s\n", task.getId(), task.getDescription(), task.getStatus());
                     }
                     System.out.println("\nEnter 0 to return to the user menu.\n");
                     System.out.println("\nEnter a task ID to view available actions.\n");
@@ -288,12 +288,10 @@ public final class App {
                     if (task.getId() == taskId) {
                         while (selection != 4) {
                             System.out.printf(
-                                "\n%d: %s: %s | %d: %s\n",
+                                "\n%d: %s: %s\n",
                                 task.getId(),
                                 task.getDescription(),
-                                task.getStatus().toString(),
-                                user.getId(),
-                                user.getName()
+                                task.getStatus()
                             );
                             System.out.println("1: Edit Description");
                             System.out.println("2: Edit Status");
